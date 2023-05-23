@@ -8,46 +8,5 @@
   </head>
   <body>
     <div id="root"></div>
-    <script>
-      // 사용자 이름과 비밀번호
-      const username = "user@example.com";
-      const password = "password1234";
-
-      // Base64로 인코딩
-      const base64 = btoa(username + ":" + password);
-
-      async function access() {
-        try {
-          const response = await fetch("http://localhost:3000/cart-items", {
-            headers: {
-              Authorization: `Basic ${base64}`,
-            },
-          });
-
-          const cartItems = await response.json();
-          render(cartItems);
-        } catch (error) {
-          dom.innerHTML = error.toString();
-          console.error(error);
-        }
-      }
-
-      function render(cartItems = []) {
-        const dom = document.querySelector("#root");
-
-        const itemListElement = document.createElement("ul");
-        const itemElements = cartItems
-          .map(
-            ({ name, price, imageUrl }) =>
-              `<li><div><img src="${imageUrl}" width="200"/><p>${name} (${price.toLocaleString()}원)</p></div></li>`
-          )
-          .join("");
-
-        itemListElement.innerHTML = itemElements;
-        dom.appendChild(itemListElement);
-      }
-
-      access();
-    </script>
   </body>
 </html>
